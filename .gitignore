@@ -2,3 +2,4 @@
 traceai/__pycache__
 traceai.egg-info
 .env
+build
