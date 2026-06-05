@@ -19,6 +19,8 @@ pip install .
 
 ## Architecture Diagram
 
+Here is the complete, updated **Architecture Diagram** section for your `README.md`. It reflects how the pipeline now loops through multiple files in Phase 2 and cleanly routes the single-file patch in Phase 5 based on AI metadata.
+
 ```text
  ┌─────────────────┐       ┌─────────────────────────────────┐
  │                 │       │ Phase 1: Interceptor            │
@@ -30,15 +32,16 @@ pip install .
                                            ▼
                            ┌─────────────────────────────────┐
                            │ Phase 2: Context Gathering      │
-                           │ - Regex engine parses trace     │
-                           │ - Locates exact file & line     │
-                           │ - Slices +/-10 lines of code    │
+                           │ - Regex scans entire trace log  │
+                           │ - Filters out system libraries  │
+                           │ - Extracts ALL local file paths │
+                           │ - Slices frames into a map      │
                            └─────────────────────────────────┘
                                            │
                                            ▼
                            ┌─────────────────────────────────┐
                            │ Phase 3: AI & Network Layer     │
-                           │ - Assembles prompt payload      │
+                           │ - Packages multi-file context   │
                            │ - Streams to Gemini API         │
                            └─────────────────────────────────┘
                                            │
@@ -46,8 +49,17 @@ pip install .
                            ┌─────────────────────────────────┐
                            │ Phase 4: UI & Metrics           │
                            │ - Rich Markdown live render     │
-                           │ - Code syntax highlighting      │
-                           │ - TTFT & Latency calculation    │
+                           │ - Captures pristine raw tokens  │
+                           │ - Calculates TTFT & Latency     │
+                           └─────────────────────────────────┘
+                                           │
+                                           ▼
+                           ┌─────────────────────────────────┐
+                           │ Phase 5: Interactive Auto-Fixer │
+                           │ - Parses AI routing metadata    │
+                           │ - Maps fix to the target file   │
+                           │ - Generates clean unified diff  │
+                           │ - Patches file on confirmation  │
                            └─────────────────────────────────┘
 
 ```
