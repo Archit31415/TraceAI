@@ -80,4 +80,7 @@ After finding the bug, the tool generates a precise code fix for the target file
 
 ## Demo Session
 
-![TraceAI Debugging Session](demo.png)
+<img width="1039" height="831" alt="Demo" src="https://github.com/user-attachments/assets/757327f5-8cae-4894-bc0a-795c745b4ecd" />
+
+### Multi-File demo
+<img width="1071" height="692" alt="Multi-File demo" src="https://github.com/user-attachments/assets/ecaa0fc4-f250-4425-936a-1551b8d3c70c" />
