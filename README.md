@@ -56,5 +56,5 @@ pip install .
 
 ## Demo Session
 
-![TraceAI Debugging Session](assets/demo.png)
+![TraceAI Debugging Session](demo.png)
 
