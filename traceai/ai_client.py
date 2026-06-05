@@ -18,6 +18,10 @@ Rules for your response:
 2. Root Cause: Identify exactly why the code failed in 1-2 short sentences.
 3. The Fix: Provide the corrected code snippet.
 4. Format your entire output in clean Markdown. Use code blocks for all code.
+
+CRITICAL INSTRUCTION FOR INTERACTIVE FIXES:
+You must provide the final corrected code inside a single Markdown code block at the absolute end of your response. 
+This specific code block MUST contain the ENTIRE corrected context window provided to you. Do not use ellipsis or placeholders like `...`. Rewrite the exact lines provided in the source context with your changes applied so that the block can be extracted and injected directly back into the user's file.
 """
 
 def assemble_payload(stderr: str, code_context: Optional[str]) -> str:

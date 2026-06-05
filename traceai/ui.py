@@ -41,3 +41,5 @@ def render_stream_and_benchmark(response_stream: Generator, crash_time: float):
     
     console.print("\n")
     console.print(metrics_panel)
+
+    return accumulated_text
