@@ -1,5 +1,6 @@
 .venv
 traceai/__pycache__
+tests/__pycache__
 traceai.egg-info
 .env
 build

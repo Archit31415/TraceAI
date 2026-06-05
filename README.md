@@ -54,7 +54,18 @@ pip install .
 
 ---
 
+## Core Features
+
+### Multi-File Intelligence
+
+TraceAI reads your entire error log from bottom to top to find every local file involved in a crash. Instead of looking only at the exact line that failed, it gathers code snippets from the caller functions further up the stack. This gives the AI the complete context of how data traveled through your application, helping it find logic errors that happened before the actual crash.
+
+### Interactive Auto-Fixer
+
+After finding the bug, the tool generates a precise code fix for the target file and shows you a standard, color-coded unified diff directly in your terminal. This preview highlights exactly which lines will be removed and which lines will be added. The tool then pauses and asks for confirmation, allowing you to safely patch your source file with a single keystroke.
+
+---
+
 ## Demo Session
 
 ![TraceAI Debugging Session](demo.png)
-

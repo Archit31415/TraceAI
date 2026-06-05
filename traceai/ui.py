@@ -7,21 +7,23 @@ from rich.panel import Panel
 
 console = Console()
 
-def render_stream_and_benchmark(response_stream: Generator, crash_time: float):
-    accumulated_text = ""
+def render_stream_and_benchmark(response_stream: Generator, crash_time: float) -> str:
+
+    raw_markdown_accumulator = ""
     first_token_time = None
     
     console.print("\n[bold cyan]TraceAI Analysis[/bold cyan]")
     
-    with Live(Markdown(accumulated_text), console=console, refresh_per_second=15) as live:
+    with Live(Markdown(raw_markdown_accumulator), console=console, refresh_per_second=15) as live:
         try:
             for chunk in response_stream:
                 if chunk.text:
                     if first_token_time is None:
                         first_token_time = time.perf_counter()
                     
-                    accumulated_text += chunk.text
-                    live.update(Markdown(accumulated_text))
+                    raw_markdown_accumulator += chunk.text
+                    
+                    live.update(Markdown(raw_markdown_accumulator))
                     
         except Exception as e:
             live.update(Markdown(f"**Stream Interrupted:** {str(e)}"))
@@ -32,7 +34,7 @@ def render_stream_and_benchmark(response_stream: Generator, crash_time: float):
     total_time = end_time - crash_time
     
     metrics_panel = Panel(
-        f"⏱[bold green]Time to First Token (TTFT):[/bold green] {ttft:.2f}s\n"
+        f"[bold green]Time to First Token (TTFT):[/bold green] {ttft:.2f}s\n"
         f"[bold blue]Total Execution Time:[/bold blue] {total_time:.2f}s",
         title="[bold]Performance Metrics[/bold]",
         border_style="dim",
@@ -42,4 +44,4 @@ def render_stream_and_benchmark(response_stream: Generator, crash_time: float):
     console.print("\n")
     console.print(metrics_panel)
 
-    return accumulated_text
+    return raw_markdown_accumulator

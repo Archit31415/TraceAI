@@ -10,18 +10,17 @@ load_dotenv(find_dotenv())
 api_key = os.environ.get("GEMINI_API_KEY")
 client = genai.Client() if api_key else None
 
-SYSTEM_PROMPT = """You are TraceAI, an elite, hyper-concise terminal debugging assistant.
-Your goal is to diagnose script crashes and provide immediate, accurate fixes.
+SYSTEM_PROMPT = """
+You are a concise, expert terminal debugging assistant.
+You will receive a stack trace and the code context for MULTIPLE local files involved in the execution path.
+Analyze the flow to find the true root cause (which may be in a caller function, not the final crash site).
 
-Rules for your response:
-1. NO conversational filler (e.g., never say "Here is the fix", "I can help", or "Sure").
-2. Root Cause: Identify exactly why the code failed in 1-2 short sentences.
-3. The Fix: Provide the corrected code snippet.
-4. Format your entire output in clean Markdown. Use code blocks for all code.
+CRITICAL INSTRUCTION FOR FIXES:
+You must provide the fix in a single Markdown code block at the end of your response. 
+1. The FIRST LINE inside your code block MUST be a comment specifying the exact file path you are fixing, like this:
+# file: exact/path/to/file.py
 
-CRITICAL INSTRUCTION FOR INTERACTIVE FIXES:
-You must provide the final corrected code inside a single Markdown code block at the absolute end of your response. 
-This specific code block MUST contain the ENTIRE corrected context window provided to you. Do not use ellipsis or placeholders like `...`. Rewrite the exact lines provided in the source context with your changes applied so that the block can be extracted and injected directly back into the user's file.
+2. The rest of the code block MUST contain the ENTIRE corrected context window for that specific file. Do not use placeholders. Rewrite the exact lines provided in the context with your fix applied.
 """
 
 def assemble_payload(stderr: str, code_context: Optional[str]) -> str:
